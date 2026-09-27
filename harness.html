@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>harness</title>
+<style>html,body{margin:0;background:#000}iframe{width:1280px;height:800px;border:0;display:block}</style></head>
+<body>
+<iframe id="f" src="/index.html"></iframe>
+<script>
+const stage = new URLSearchParams(location.search).get('stage') || 'select';
+const f = document.getElementById('f');
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+f.onload = async () => {
+  const d = f.contentDocument;
+  await sleep(2500);
+  const start = d.getElementById('startButton');
+  if (start) start.click();
+  await sleep(1200);
+  if (stage === 'match') {
+    for (let i = 0; i < 6; i++) {
+      const confirm = d.querySelector('.selection-confirm');
+      if (confirm) confirm.click();
+      await sleep(600);
+    }
+    await sleep(9000);
+  }
+  document.title = 'at-' + stage;
+};
+</script>
+</body></html>
